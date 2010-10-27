@@ -11,7 +11,7 @@ class IEEEXploreSearch:
     def __init__(self):
         self.SEARCH_BASE_URL = "http://ieeexplore.ieee.org/search/searchresult.jsp"
 
-    def search(self, terms, limit=10):
+    def get_response(self, terms):
         params = urllib.urlencode({'queryText': " ".join(terms), 'pageNumber' : '1',
                                    'newsearch' : 'true'})
         url = self.SEARCH_BASE_URL + "?" + params
@@ -24,35 +24,23 @@ class IEEEXploreSearch:
         opener.addheaders = headers
         resp = opener.open(url)
         
+        return resp
+
+    def search(self, terms, limit=10):
+        resp = self.get_response(terms)
         titles = []
 
         try:
             html = resp.read()
-            results = []
             html = html.decode('ascii', 'ignore')
-            print html
-            # Screen-scrape the result to obtain the publication information
             soup = BeautifulSoup(html)
 
-            #attrs = soup.findAll("div", { "class" : "detail" })
             attrs = soup.findAll("div", { 'class' : 'detail' })
+            titles = []
             for attr in attrs:
-                print attr
-                if str(attr).find("/search/") != -1:
-                    print attr
-            '''
-            for attr in attrs:
-                temp = BeautifulSoup(str(attr))
-                title = ""
-                
-                for item in temp.a.contents:
-                    item = str(item).replace("<b>", "")
-                    item = str(item).replace("</b>", "")
-                    title = title + str(item)
-                titles.append(title)
-
+                titles.append("".join(attr.a.findAll(text=True)))
+            
             return titles
-            '''
         except urllib2.HTTPError:
             print "ERROR: ",
             print resp.status, resp.reason
