@@ -1,0 +1,25 @@
+# Google account email
+USER_EMAIL = ""
+
+# Google account password
+USER_PASSWORD = ""
+
+# Spreadsheet key for Google Spreadsheet that is to be populated
+# Can be found as GET parameter in spreadsheet URL
+# e.g. http://spreadsheets.google.com/ccc?key=ab...MG&hl=pt_BR
+SPREADSHEET_KEY = ""
+
+# A tuple of lists that each represent a different search string
+# Each search string is represented by a list of strings
+# e.g. ["role", "based", "access", "control"]
+SEARCH_CRITERIA = (
+)
+
+# Specifies which search engines to get results from
+# Uncomment those you wish to use
+SEARCH_ENGINES = (
+    #"google_scholar",
+    #"citeseerx",
+    #"acmportal",
+    #"ieeexplore",
+)
