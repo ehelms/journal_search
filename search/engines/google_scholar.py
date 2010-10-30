@@ -10,6 +10,44 @@ class GoogleScholarSearch:
     def __init__(self):
         self.SEARCH_BASE_URL = "http://scholar.google.com/scholar"
 
+    def search(self, terms, num_results=10):
+        titles = []
+        count = 0
+        
+        if num_results:
+            while count < num_results:
+                resp = self._get_response(terms, count)
+                titles.extend(self._scrape(resp))
+                count = count + 10
+        else:
+            resp = self._get_response(terms, count)
+            titles.extend(self._scrape(resp))
+            count = count + 10
+            while not self._stop_search(terms, titles):
+                resp = self._get_response(terms, count)
+                titles.extend(self._scrape(resp))
+                count = count + 10
+                print count
+
+        return titles
+    
+    
+    def _stop_search(self, terms, titles):
+        for i in range(len(titles) - 10, len(titles)):
+            if self._has_criteria(terms, titles[i]):
+                return False
+
+        return True
+
+
+    def _has_criteria(self, terms, entry):
+        for term in terms:
+            if entry.find(term) == -1:
+                return False
+
+        return True
+    
+    
     def _get_response(self, terms, start):
         params = urllib.urlencode({'q': "+".join(terms), 'start': start, 
                                     'hl' : 'en',
@@ -21,18 +59,9 @@ class GoogleScholarSearch:
         resp = urllib2.urlopen(request)
         return resp
 
-    def search(self, terms, num_results=10):
+
+    def _scrape(self, response):
         titles = []
-        count = 0
-
-        while count < num_results:
-            resp = self._get_response(terms, count)
-            titles.append(self._scrape(resp, titles))
-            count = count + 10
-
-        return titles
-
-    def _scrape(self, response, titles):
         try:
             html = response.read()
             results = []
