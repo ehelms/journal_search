@@ -38,7 +38,7 @@ class IEEEXploreSearch:
     def _scrape(self, response):
         titles = []
         try:
-            html = resp.read()
+            html = response.read()
             html = html.decode('ascii', 'ignore')
             soup = BeautifulSoup(html)
 

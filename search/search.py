@@ -54,10 +54,11 @@ def search(engine, criteria, num_results):
     else:
         titles.extend(engine.search(criteria, count))
         count = count + 10
-        while not _stop_search(criteria, titles):
-            titles.extend(engine.search(criteria, count))
-            count = count + 10
-            print count
+        if len(titles) != 0:
+            while not _stop_search(criteria, titles):
+                titles.extend(engine.search(criteria, count))
+                count = count + 10
+                print count
 
     return titles
     
