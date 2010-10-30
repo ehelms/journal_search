@@ -29,11 +29,14 @@ def run_search(num_results):
 
 def run_combine():
     gs = GoogleSpreadsheet()
-    print "Eliminating duplicates..."
-    titles = eliminate_duplicates(gs)
-    print "Inserting titles set....."
-    gs.insert_data(len(settings.SEARCH_CRITERIA) + 1, titles, 1)
-    print "Done."
+
+    for search_engine in settings.SEARCH_ENGINES:
+        print "Eliminating duplicates..."
+        titles = eliminate_duplicates(gs)
+        print "Inserting titles set....."
+        gs.insert_data(len(settings.SEARCH_CRITERIA) + 1, titles,
+                       search_engine["worksheet_id"])
+        print "Done."
 
 
 def get_search_engine(query):
