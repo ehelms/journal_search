@@ -10,6 +10,6 @@ if __name__ == '__main__':
     if 'test' in sys.argv:
         test_runner.run()
     elif 'search' in sys.argv:
-        slr.run_search()
+        slr.run_search(int(sys.argv[2]))
     else:
         print "Invalid arguments"

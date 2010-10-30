@@ -6,14 +6,18 @@ from journal_search.document.spreadsheet import GoogleSpreadsheet
 from journal_search import settings
 
 
-def run_search():
+def run_search(num_results):
     gs = GoogleSpreadsheet()
     search_engines = get_search_engines()
     
     for engine in search_engines:
+        print "Starting search on: " + str(settings.SEARCH_ENGINES[search_engines.index(engine)])
+        print "Retrieving " + str(num_results) + " total results..."
         for criteria in settings.SEARCH_CRITERIA:
-            data = engine.search(criteria)
+            print "Search criteria is: " + str(criteria)
+            data = engine.search(criteria, num_results)
             if data:
+                print "Inserting " + str(len(data))  + " results into spreadsheet..."
                 gs.insert_cell(1, settings.SEARCH_CRITERIA.index(criteria) + 1, " ".join(criteria), search_engines.index(engine) + 1)
                 gs.insert_data(settings.SEARCH_CRITERIA.index(criteria) + 1, data, search_engines.index(engine) + 1)
             else:
