@@ -15,7 +15,7 @@ class GoogleSpreadsheet():
     
     def insert_data(self, column, data, worksheet_id=1):
         row_counter = 2
-        self.set_worksheet_size(len(data))
+        self.set_worksheet_size(len(data), worksheet_id)
         #batch_request = gdata.spreadsheet.SpreadsheetsCellsFeed()
         for item in data:
             #batch_request.AddUpdate(self.get_cell(row_counter, column, item))

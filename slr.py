@@ -9,18 +9,20 @@ from journal_search import settings
 
 def run_search(num_results):
     gs = GoogleSpreadsheet()
-    search_engines = get_search_engines()
     
-    for engine in search_engines:
-        print "Starting search on: " + str(settings.SEARCH_ENGINES[search_engines.index(engine)])
+    for search_engine in settings.SEARCH_ENGINES:
+        engine = get_search_engine(search_engine["engine"])
+        print "Starting search on: " + search_engine["engine"]
         print "Retrieving " + str(num_results) + " total results..."
         for criteria in settings.SEARCH_CRITERIA:
             print "Search criteria is: " + str(criteria)
             data = engine.search(criteria, num_results)
             if data:
                 print "Inserting " + str(len(data))  + " results into spreadsheet..."
-                gs.insert_cell(1, settings.SEARCH_CRITERIA.index(criteria) + 1, " ".join(criteria), search_engines.index(engine) + 1)
-                gs.insert_data(settings.SEARCH_CRITERIA.index(criteria) + 1, data, search_engines.index(engine) + 1)
+                gs.insert_cell(1, settings.SEARCH_CRITERIA.index(criteria) + 1,
+                               " ".join(criteria), search_engine["worksheet_id"])
+                gs.insert_data(settings.SEARCH_CRITERIA.index(criteria) + 1,
+                               data, search_engine["worksheet_id"])
             else:
                 print "Empty pubs"
 
@@ -34,18 +36,17 @@ def run_combine():
     print "Done."
 
 
-def get_search_engines():
-    engines = []
-    if "google_scholar" in settings.SEARCH_ENGINES:
+def get_search_engine(query):
+    if "google_scholar" == query:
         google_scholar = GoogleScholarSearch()
-        engines.append(google_scholar)
-    if "citeseerx" in settings.SEARCH_ENGINES:
+        return google_scholar
+    if "citeseerx" == query:
         citeseerx = CiteSeerXSearch()
-        engines.append(citeseerx)
-    if "acmportal" in settings.SEARCH_ENGINES:
+        return citeseerx
+    if "acmportal" == query:
         acmportal = ACMPortalSearch()
-        engines.append(acmportal)
-    if "ieeexplore" in settings.SEARCH_ENGINES:
+        return acmportal
+    if "ieeexplore" == query:
         ieeexplore = IEEEXploreSearch()
-        engines.append(ieeexplore)
-    return engines
+        return ieeexplore
+    return None

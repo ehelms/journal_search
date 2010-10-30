@@ -17,9 +17,16 @@ SEARCH_CRITERIA = (
 
 # Specifies which search engines to get results from
 # Uncomment those you wish to use
+# Place the worksheet_id you wish to use for a given search engine
+# The worksheet_id corresponds to numerical slot that the worksheets appear
+# in the spreadsheet
 SEARCH_ENGINES = (
-    #"google_scholar",
-    #"citeseerx",
-    #"acmportal",
-    #"ieeexplore",
+    #{ 'engine' : "google_scholar", 
+     #'worksheet_id' : 1 },
+    #{ 'engine' : "citeseerx",
+     #'worksheet_id' : 2 },
+    #{ 'engine' : 'acmportal',
+     #'worksheet_id' : 3 },
+    #{ 'engine' : 'ieeexplore',
+     #'worksheet_id' : 4 }
 )
