@@ -30,7 +30,7 @@ def run_combine():
     print "Eliminating duplicates..."
     titles = eliminate_duplicates(gs)
     print "Inserting titles set....."
-    gs.insert_data(4, titles, 1)
+    gs.insert_data(len(settings.SEARCH_CRITERIA) + 1, titles, 1)
     print "Done."
 
 
