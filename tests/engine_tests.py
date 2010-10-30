@@ -1,6 +1,6 @@
 import unittest
 
-from journal_search.search_engines.ieeexplore import IEEEXploreSearch
+from journal_search.search.engines.ieeexplore import IEEEXploreSearch
 
 class TestIEEEXplore(unittest.TestCase):
 

@@ -11,5 +11,7 @@ if __name__ == '__main__':
         test_runner.run()
     elif 'search' in sys.argv:
         slr.run_search(int(sys.argv[2]))
+    elif 'combine' in sys.argv:
+        slr.run_combine()
     else:
         print "Invalid arguments"

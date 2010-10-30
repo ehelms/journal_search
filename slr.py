@@ -1,7 +1,8 @@
-from journal_search.search_engines.google_scholar import GoogleScholarSearch
-from journal_search.search_engines.citeseerx import CiteSeerXSearch
-from journal_search.search_engines.ieeexplore import IEEEXploreSearch
-from journal_search.search_engines.acm_portal import ACMPortalSearch
+from journal_search.search.engines.google_scholar import GoogleScholarSearch
+from journal_search.search.engines.citeseerx import CiteSeerXSearch
+from journal_search.search.engines.ieeexplore import IEEEXploreSearch
+from journal_search.search.engines.acm_portal import ACMPortalSearch
+from journal_search.search.combiner import eliminate_duplicates
 from journal_search.document.spreadsheet import GoogleSpreadsheet
 from journal_search import settings
 
@@ -22,6 +23,15 @@ def run_search(num_results):
                 gs.insert_data(settings.SEARCH_CRITERIA.index(criteria) + 1, data, search_engines.index(engine) + 1)
             else:
                 print "Empty pubs"
+
+
+def run_combine():
+    gs = GoogleSpreadsheet()
+    print "Eliminating duplicates..."
+    titles = eliminate_duplicates(gs)
+    print "Inserting titles set....."
+    gs.insert_data(4, titles, 1)
+    print "Done."
 
 
 def get_search_engines():
