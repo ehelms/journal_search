@@ -30,3 +30,9 @@ SEARCH_ENGINES = (
     #{ 'engine' : 'ieeexplore',
      #'worksheet_id' : 4 }
 )
+
+# This value represents the stopping threshold for a search done without
+# a set number of search results.  The value should be an integer and represents 
+# the number of consecutive articles without the search criteria in the title 
+# to stop after.
+STOPPING_THRESHOLD = 10

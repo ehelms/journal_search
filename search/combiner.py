@@ -1,4 +1,5 @@
 from journal_search.document.spreadsheet import GoogleSpreadsheet
+from journal_search import settings
 
 def run():
     gs = GoogleSpreadsheet()
@@ -10,7 +11,6 @@ def run():
         gs.insert_data(len(settings.SEARCH_CRITERIA) + 1, data,
                        search_engine["worksheet_id"])
         print "Done."
-
 
 
 def eliminate_duplicates(google_spreadsheet):

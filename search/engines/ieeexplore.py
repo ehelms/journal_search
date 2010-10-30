@@ -11,31 +11,13 @@ class IEEEXploreSearch:
     def __init__(self):
         self.SEARCH_BASE_URL = "http://ieeexplore.ieee.org/search/searchresult.jsp"
 
-    def search(self, terms, num_results=10):
-        titles = []
-        count = 1
-        
-        while (count * 10) <= num_results:
-            resp = self.get_response(terms, count)
-            try:
-                html = resp.read()
-                html = html.decode('ascii', 'ignore')
-                soup = BeautifulSoup(html)
-
-                attrs = soup.findAll("div", { 'class' : 'detail' })
-                titles = []
-                for attr in attrs:
-                    titles.append("".join(attr.a.findAll(text=True)))
-                
-            except urllib2.HTTPError:
-                print "ERROR: ",
-                print resp.status, resp.reason
-                return []
-            count = count + 1
-        
+    def search(self, terms, count):
+        resp = self._get_response(terms, count)
+        titles = self._scrape(resp)
         return titles
-    
-    def get_response(self, terms, page_number=1):
+
+
+    def _get_response(self, terms, page_number=1):
         params = urllib.urlencode({'queryText': " ".join(terms), 'pageNumber' :
                                    page_number,
                                    'rowsPerPage' : '10',
@@ -52,3 +34,22 @@ class IEEEXploreSearch:
         
         return resp
 
+
+    def _scrape(self, response):
+        titles = []
+        try:
+            html = resp.read()
+            html = html.decode('ascii', 'ignore')
+            soup = BeautifulSoup(html)
+
+            attrs = soup.findAll("div", { 'class' : 'detail' })
+            titles = []
+            for attr in attrs:
+                titles.append("".join(attr.a.findAll(text=True)))
+            
+        except urllib2.HTTPError:
+            print "ERROR: ",
+            print resp.status, resp.reason
+            return []
+    
+        return titles
