@@ -5,6 +5,7 @@ from journal_search.search.engines.acm_portal import ACMPortalSearch
 from journal_search.document.spreadsheet import GoogleSpreadsheet
 from journal_search import settings
 
+from string import lower
 
 def run(num_results=None):
     gs = GoogleSpreadsheet()
@@ -71,7 +72,7 @@ def _stop_search(terms, titles):
 
 def _has_criteria(terms, entry):
     for term in terms:
-        if entry.find(term) == -1:
+        if lower(entry).find(lower(term)) == -1:
             return False
 
     return True
