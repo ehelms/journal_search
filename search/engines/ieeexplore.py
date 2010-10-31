@@ -12,7 +12,7 @@ class IEEEXploreSearch:
         self.SEARCH_BASE_URL = "http://ieeexplore.ieee.org/search/searchresult.jsp"
 
     def search(self, terms, count):
-        resp = self._get_response(terms, count)
+        resp = self._get_response(terms, count + 1)
         titles = self._scrape(resp)
         return titles
 
