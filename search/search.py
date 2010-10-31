@@ -2,7 +2,6 @@ from journal_search.search.engines.google_scholar import GoogleScholarSearch
 from journal_search.search.engines.citeseerx import CiteSeerXSearch
 from journal_search.search.engines.ieeexplore import IEEEXploreSearch
 from journal_search.search.engines.acm_portal import ACMPortalSearch
-from journal_search.search.combiner import eliminate_duplicates
 from journal_search.document.spreadsheet import GoogleSpreadsheet
 from journal_search import settings
 
