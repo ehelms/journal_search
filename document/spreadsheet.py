@@ -29,13 +29,15 @@ class GoogleSpreadsheet():
     def set_worksheet_size(self, num_rows, worksheet_id=1):
         worksheet = self.client.GetWorksheetsFeed(settings.SPREADSHEET_KEY,
                                                   wksht_id = worksheet_id)
-        worksheet.row_count.text = str(num_rows + 1)
-        entry = self.client.UpdateWorksheet(worksheet)
+
+        if int(worksheet.row_count.text) < num_rows + 1:
+            worksheet.row_count.text = str(num_rows + 1)
+            entry = self.client.UpdateWorksheet(worksheet)
         
-        if isinstance(entry, gdata.spreadsheet.SpreadsheetsWorksheet):
-            return True
-        else:
-            return False
+            if isinstance(entry, gdata.spreadsheet.SpreadsheetsWorksheet):
+                return True
+            else:
+                return False
 
 
     def get_cell(self, row, column, data):
