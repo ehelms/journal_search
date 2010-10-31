@@ -10,9 +10,11 @@ from BeautifulSoup import BeautifulSoup
 class IEEEXploreSearch:
     def __init__(self):
         self.SEARCH_BASE_URL = "http://ieeexplore.ieee.org/search/searchresult.jsp"
+        self.page_counter = 0
 
     def search(self, terms, count):
-        resp = self._get_response(terms, count + 1)
+        self.page_counter = self.page_counter + 1
+        resp = self._get_response(terms, self.page_counter)
         titles = self._scrape(resp)
         return titles
 
@@ -45,7 +47,7 @@ class IEEEXploreSearch:
             attrs = soup.findAll("div", { 'class' : 'detail' })
             titles = []
             for attr in attrs:
-                titles.append("".join(attr.a.findAll(text=True)))
+                titles.append("".join(attr.a.findAll(text=True)).strip())
             
         except urllib2.HTTPError:
             print "ERROR: ",
