@@ -1,2 +1,2 @@
 gdata
-BeautifulSoup
+BeautifulSoup==3.0.8.1
