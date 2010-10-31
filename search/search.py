@@ -11,10 +11,11 @@ def run(num_results=None):
     gs = GoogleSpreadsheet()
     
     for search_engine in settings.SEARCH_ENGINES:
-        engine = _get_search_engine(search_engine["engine"])
-        print "Starting search on: " + search_engine["engine"]
-        print "Retrieving " + str(num_results) + " total results..."
         for criteria in settings.SEARCH_CRITERIA:
+            engine = _get_search_engine(search_engine["engine"])
+            print "Starting search on: " + search_engine["engine"]
+            if num_results:
+                print "Retrieving " + str(num_results) + " total results..."
             print "Search criteria is: " + str(criteria)
             data = search(engine, criteria, num_results)
             if data:
@@ -57,14 +58,15 @@ def search(engine, criteria, num_results):
         if len(titles) != 0:
             while not _stop_search(criteria, titles):
                 titles.extend(engine.search(criteria, count))
+                print count
                 count = count + 10
-    print count
     return titles
     
     
 def _stop_search(terms, titles):
     for i in range(len(titles) - settings.STOPPING_THRESHOLD, len(titles)):
         if _has_criteria(terms, titles[i]):
+            print "not stopping"
             return False
 
     return True
