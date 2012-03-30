@@ -14,10 +14,13 @@ def run(num_results=None):
         for criteria in settings.SEARCH_CRITERIA:
             engine = _get_search_engine(search_engine["engine"])
             print "Starting search on: " + search_engine["engine"]
+
             if num_results:
                 print "Retrieving " + str(num_results) + " total results..."
+
             print "Search criteria is: " + str(criteria)
             data = search(engine, criteria, num_results)
+
             if data:
                 print "Inserting " + str(len(data))  + " results into spreadsheet..."
                 gs.insert_cell(1, settings.SEARCH_CRITERIA.index(criteria) + 1,

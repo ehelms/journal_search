@@ -22,6 +22,7 @@ class GoogleScholarSearch:
                                     'btnG' : 'Search', 'as_sdt' : '40000000000',
                                     'as_vis' : '1' })
         url = self.SEARCH_BASE_URL + "?" + params
+        print url
         headers = { 'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.0; en-GB; rv:1.8.1.12) Gecko/20080201 Firefox/2.0.0.12' }
         request = urllib2.Request(url, None, headers)
         resp = urllib2.urlopen(request)
@@ -38,7 +39,7 @@ class GoogleScholarSearch:
             # Screen-scrape the result to obtain the publication information
             soup = BeautifulSoup(html)
             
-            attrs = soup.findAll("div", { "class" : "gs_rt"})
+            attrs = soup.findAll("h3", { "class" : "gs_rt"})
             for attr in attrs:
                 temp = BeautifulSoup(str(attr))
                 title = ""
