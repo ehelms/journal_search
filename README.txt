@@ -1,3 +1,5 @@
+journal_search
+
 How to use:
 
 The main entry point is comb.py.  From there you can run the following:
